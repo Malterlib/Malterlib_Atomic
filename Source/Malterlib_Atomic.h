@@ -1,4 +1,4 @@
-﻿// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB 
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #pragma once
@@ -616,52 +616,17 @@ namespace NMib
 			
 		};
 			
-#ifdef DCompiler_MSVC
-		class CAtomicFlag
-		{
-			std::atomic_flag m_Atomic;
-		public:
-			
-			inline_always bool f_TestAndSet(EMemoryOrder _Order = EMemoryOrder_SequentiallyConsistent) volatile noexcept
-			{
-				return m_Atomic.test_and_set((std::memory_order)_Order);
-			}
-			
-			inline_always bool f_TestAndSet(EMemoryOrder _Order = EMemoryOrder_SequentiallyConsistent) noexcept
-			{
-				return m_Atomic.test_and_set((std::memory_order)_Order);
-			}
-			inline_always void f_Clear(EMemoryOrder _Order = EMemoryOrder_SequentiallyConsistent) volatile noexcept
-			{
-				return m_Atomic.clear((std::memory_order)_Order);
-			}
-			inline_always void f_Clear(EMemoryOrder _Order = EMemoryOrder_SequentiallyConsistent) noexcept
-			{
-				return m_Atomic.clear((std::memory_order)_Order);
-			}
-			
-			inline_always CAtomicFlag() noexcept
-			{
-				m_Atomic._My_flag = 0;
-			} // = default;
-			
-			CAtomicFlag(bool _Value) noexcept
-			{
-				m_Atomic._My_flag = _Value; // Hack because VS implementation has no constructor
-			}
-		};
-#else
 		class CAtomicFlag : protected std::atomic_flag
 		{
 			typedef std::atomic_flag CSuper;
 		public:
-			inline_always CAtomicFlag() noexcept
-				: CSuper(0)
+			constexpr inline_always CAtomicFlag() noexcept
+				: CSuper{0}
 			{
 			} // = default;
 			
-			inline_always CAtomicFlag(bool _Value) noexcept
-				: CSuper(_Value)
+			constexpr inline_always CAtomicFlag(bool _Value) noexcept
+				: CSuper{_Value}
 			{
 			}
 			
@@ -683,7 +648,6 @@ namespace NMib
 				return std::atomic_flag::clear((std::memory_order)_Order);
 			}
 		};
-#endif
 			
 		template <typename tf_CType>
 		inline_always tf_CType fg_KillDependency(tf_CType _Value) noexcept
