@@ -620,12 +620,12 @@ namespace NMib
 		{
 			typedef std::atomic_flag CSuper;
 		public:
-			constexpr inline_always CAtomicFlag() noexcept
+			inline_always CAtomicFlag() noexcept
 				: CSuper{0}
 			{
 			} // = default;
 			
-			constexpr inline_always CAtomicFlag(bool _Value) noexcept
+			inline_always CAtomicFlag(bool _Value) noexcept
 				: CSuper{_Value}
 			{
 			}
