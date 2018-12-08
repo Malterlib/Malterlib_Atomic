@@ -88,7 +88,7 @@ namespace
 				{
 
 					
-					NMib::NContainer::TCVector<NMib::NPtr::TCUniquePointer<NMib::NThread::CThreadObject>> Threads;
+					NMib::NContainer::TCVector<NMib::NStorage::TCUniquePointer<NMib::NThread::CThreadObject>> Threads;
 					
 					NMib::NContainer::TCSet<tf_CType> ToCheck;
 					for (int i = 0; i < 32; ++i)
@@ -361,7 +361,7 @@ namespace
 			DMibTestSuite("Atomic flag")
 			{
 				{
-					NMib::NContainer::TCVector<NMib::NPtr::TCUniquePointer<NMib::NThread::CThreadObject>> Threads;
+					NMib::NContainer::TCVector<NMib::NStorage::TCUniquePointer<NMib::NThread::CThreadObject>> Threads;
 					
 					NMib::NContainer::TCSet<int8> ToCheck;
 					for (int i = 0; i < 32; ++i)
