@@ -618,14 +618,9 @@ namespace NMib::NAtomic
 		typedef std::atomic_flag CSuper;
 	public:
 		inline_always CAtomicFlag() noexcept
-			: CSuper{0}
+			: CSuper{}
 		{
 		} // = default;
-
-		inline_always CAtomicFlag(bool _Value) noexcept
-			: CSuper{_Value}
-		{
-		}
 
 		inline_always bool f_TestAndSet(EMemoryOrder _Order = EMemoryOrder_SequentiallyConsistent) volatile noexcept
 		{
