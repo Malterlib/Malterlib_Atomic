@@ -567,6 +567,12 @@ namespace NMib::NAtomic
 		{
 			return CSuper::fetch_xor(_Value);
 		}
+
+		template <typename tf_CFormatter>
+		auto f_CreateStringFormatter(tf_CFormatter &_Formatter) const
+		{
+			return fg_CreateStringFormatter(_Formatter, this->f_Load());
+		}
 	};
 
 	class CAtomicFlagAggregate
