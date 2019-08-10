@@ -16,12 +16,12 @@ namespace NMib::NAtomic
 	 */
 	enum EMemoryOrder
 	{
-		EMemoryOrder_Relaxed = std::memory_order_relaxed ///< Relaxed ordering
-		, EMemoryOrder_Consume = std::memory_order_consume ///< Consume ordering
-		, EMemoryOrder_Acquire = std::memory_order_acquire  ///< Acquire ordering
-		, EMemoryOrder_Release = std::memory_order_release	///< Release ordering
-		, EMemoryOrder_AcquireRelease = std::memory_order_acq_rel	///< Acquire release ordering
-		, EMemoryOrder_SequentiallyConsistent = std::memory_order_seq_cst	///< Sequentially consistent ordering
+		EMemoryOrder_Relaxed = (int)std::memory_order_relaxed ///< Relaxed ordering
+		, EMemoryOrder_Consume = (int)std::memory_order_consume ///< Consume ordering
+		, EMemoryOrder_Acquire = (int)std::memory_order_acquire  ///< Acquire ordering
+		, EMemoryOrder_Release = (int)std::memory_order_release	///< Release ordering
+		, EMemoryOrder_AcquireRelease = (int)std::memory_order_acq_rel	///< Acquire release ordering
+		, EMemoryOrder_SequentiallyConsistent = (int)std::memory_order_seq_cst	///< Sequentially consistent ordering
 	};
 
 	template <typename t_CType>
