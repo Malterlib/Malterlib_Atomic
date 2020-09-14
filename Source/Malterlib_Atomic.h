@@ -46,6 +46,8 @@ namespace NMib::NAtomic
 		}
 
 		typedef typename NMib::NTraits::TCUnsigned<typename NMib::NTraits::TCIntFromSize<sizeof(std::atomic<t_CType>)>::CType>::CType CStorage;
+
+		static constexpr bool mc_bIsAlwaysLockFree = std::atomic<t_CType>::is_always_lock_free;
 	public:
 		CStorage m_Storage;
 
@@ -301,6 +303,9 @@ namespace NMib::NAtomic
 		TCAtomic(TCAtomic const &);
 		TCAtomic &operator = (TCAtomic const &);
 	public:
+
+		static constexpr bool mc_bIsAlwaysLockFree = std::atomic<t_CType>::is_always_lock_free;
+
 		typedef std::atomic<t_CType> CSuper;
 
 #ifndef DMibNoAggregateConstexpr

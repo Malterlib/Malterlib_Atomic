@@ -234,25 +234,39 @@ namespace
 		{
 			{
 				DMibTestPath("Normal");;
+				typename NMib::NTraits::TCRemovePointer<tf_CType>::CType RawValues[4] = {};
+				tf_CType Value;
+				if constexpr (NMib::NTraits::TCIsPointer<tf_CType>::mc_Value)
+					Value = RawValues;
+				else
+					Value = 0;
+
 				TCAtomic<tf_CType> Atomic;
-				f_TestIntegerAndPointerGeneric<tf_CType>(_Name, Atomic);
+				f_TestIntegerAndPointerGeneric(_Name, Atomic, Value);
 			}
 			{
 				DMibTestPath("Aggregate");
+				typename NMib::NTraits::TCRemovePointer<tf_CType>::CType RawValues[4] = {};
+				tf_CType Value;
+				if constexpr (NMib::NTraits::TCIsPointer<tf_CType>::mc_Value)
+					Value = RawValues;
+				else
+					Value = 0;
+
 				TCAtomicAggregate<tf_CType> Atomic = DMibAtomicInit(0);
-				f_TestIntegerAndPointerGeneric<tf_CType>(_Name, Atomic);
+				f_TestIntegerAndPointerGeneric(_Name, Atomic, Value);
 			}
 		}
 		
 		template <typename tf_CType, typename tf_CAtomicType>
-		void f_TestIntegerAndPointerGeneric(NMib::NStr::CStr const &_Name, tf_CAtomicType &_Atomic0)
+		void f_TestIntegerAndPointerGeneric(NMib::NStr::CStr const &_Name, tf_CAtomicType &_Atomic0, tf_CType &_Value)
 		{
 			auto &Atomic = _Atomic0;
 			DMibTestPath(_Name);
 			// Functions
 			{
 				DMibTestPath("Members");
-				tf_CType Value = 0;
+				auto Value = _Value;
 				fg_AtomicStore(Atomic, Value);
 
 				DMibTest(DMibExpr(Atomic.f_FetchAdd(1)) == DMibExpr(Value));
@@ -272,7 +286,7 @@ namespace
 			}
 			{
 				DMibTestPath("Global functions");
-				tf_CType Value = 0;
+				auto Value = _Value;
 				fg_AtomicStore(Atomic, Value);
 
 				DMibTest(DMibExpr(fg_AtomicFetchAdd(Atomic, 1)) == DMibExpr(Value));
