@@ -308,7 +308,6 @@ namespace NMib::NAtomic
 
 		typedef std::atomic<t_CType> CSuper;
 
-#ifndef DMibNoAggregateConstexpr
 		constexpr TCAtomic() noexcept // = default;
 			: CSuper(0)
 		{
@@ -318,17 +317,7 @@ namespace NMib::NAtomic
 			: CSuper(_Value)
 		{
 		}
-#else
-		TCAtomic() noexcept // = default;
-			: CSuper(0)
-		{
-		}
 
-		TCAtomic(t_CType _Value) noexcept
-			: CSuper(_Value)
-		{
-		}
-#endif
 		inline_always t_CType operator = (t_CType _Value) volatile noexcept
 		{
 			CSuper::store(_Value);
