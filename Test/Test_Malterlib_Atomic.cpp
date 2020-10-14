@@ -55,6 +55,12 @@ namespace
 		
 		(void)g_TestInit_Flag;
 	}
+
+#ifdef DMibSanitizerEnabled
+	static constexpr mint gc_Iterations = 8 * 1024;
+#else
+	static constexpr mint gc_Iterations = 64 * 1024;
+#endif
 	
 	class CAtomic_Tests : public NMib::NTest::CTest
 	{
@@ -119,7 +125,7 @@ namespace
 								{
 									NMib::NAtomic::fg_MemoryFence();
 									auto ThisLocal = This;
-									for (int i = 0; i < 64*1024; ++i)
+									for (int i = 0; i < gc_Iterations; ++i)
 									{
 										ThisLocal = Atomic.f_Exchange(ThisLocal);
 									}
@@ -151,7 +157,7 @@ namespace
 								{
 									fg_CompilerFence();
 									auto ThisLocal2 = This2;
-									for (int i = 0; i < 64*1024; ++i)
+									for (int i = 0; i < gc_Iterations; ++i)
 									{
 										ThisLocal2 = fg_AtomicExchange(Atomic2, ThisLocal2);
 									}
@@ -397,7 +403,7 @@ namespace
 							{
 								NMib::NAtomic::fg_MemoryFence();
 								auto ThisLocal = This;
-								for (int i = 0; i < 64*1024; ++i)
+								for (int i = 0; i < gc_Iterations; ++i)
 								{
 									while (Flag.f_TestAndSet())
 										NMib::NSys::fg_Thread_Yield();
@@ -433,7 +439,7 @@ namespace
 							{
 								fg_CompilerFence();
 								auto ThisLocal2 = This2;
-								for (int i = 0; i < 64*1024; ++i)
+								for (int i = 0; i < gc_Iterations; ++i)
 								{
 									while (fg_AtomicFlagTestAndSet(Flag))
 										NMib::NSys::fg_Thread_Yield();
