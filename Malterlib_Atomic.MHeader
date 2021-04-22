@@ -26,20 +26,13 @@ Import "../Core/Lib_Malterlib.MTarget"
 
 Property
 {
-	MalterlibLibrary_Atomic true
-	{
-		&
-		{
-			MalterlibLibrary_Atomic ""
-			MalterlibLibrary_All true
-		}
-	}
-	MalterlibSubLibraries "Atomic;@(MalterlibSubLibraries)"
+	MalterlibLibrary_Atomic define bool = MalterlibLibrary_All
+	MalterlibSubLibraries =+ "Atomic"
 	{
 		!!MalterlibLibrary_Atomic true
 	}
-//	MalterlibSubLibrarySeparate_Lib_Malterlib_Atomic true
-	MalterlibIncludeRoots "@('Include'->MakeAbsolute());@(MalterlibIncludeRoots)"
+//	MalterlibSubLibrarySeparate_Lib_Malterlib_Atomic define bool = true
+	MalterlibIncludeRoots =+ "Include"->MakeAbsolute()
 	{
 		!!MalterlibLibrary_Atomic true
 	}
@@ -50,7 +43,7 @@ Property
 {
 	!!MalterlibEnableInternalTests true
 	
-	MalterlibTests "Malterlib_Atomic;@(MalterlibTests)"
-	MalterlibTestFiles_Malterlib_Atomic "@('Test/*'->MakeAbsolute())"
+	MalterlibTests =+ "Malterlib_Atomic"
+	MalterlibTestFiles_Malterlib_Atomic define [type(CEntity)] = ["Test/*"->MakeAbsolute()]
 }
 
