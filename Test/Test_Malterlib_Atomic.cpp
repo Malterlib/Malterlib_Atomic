@@ -188,7 +188,8 @@ namespace
 				Atomic.f_Store(0);
 
 				tf_CType Expected = (tf_CType)0;
-				DMibTest(DMibExpr(Atomic.f_CompareExchangeWeak(Expected, (tf_CType)1)));
+				while (!Atomic.f_CompareExchangeWeak(Expected, (tf_CType)1))
+					;
 				DMibTest(DMibExpr(Atomic.f_Load()) == DMibExpr((tf_CType)1));
 				DMibTest(DMibExpr(Expected) == DMibExpr((tf_CType)0));
 
@@ -213,7 +214,8 @@ namespace
 				Atomic.f_Store(0);
 
 				tf_CType Expected = (tf_CType)0;
-				DMibTest(DMibExpr(fg_AtomicCompareExchangeWeak(Atomic, Expected, (tf_CType)1)));
+				while (!fg_AtomicCompareExchangeWeak(Atomic, Expected, (tf_CType)1))
+					;
 				DMibTest(DMibExpr(fg_AtomicLoad(Atomic)) == DMibExpr((tf_CType)1));
 				DMibTest(DMibExpr(Expected) == DMibExpr((tf_CType)0));
 
