@@ -561,6 +561,16 @@ namespace NMib::NAtomic
 			return CSuper::fetch_xor(_Value);
 		}
 
+		t_CType &f_NonAtomic()
+		{
+			return reinterpret_cast<t_CType &>(*this);
+		}
+
+		t_CType const &f_NonAtomic() const
+		{
+			return reinterpret_cast<t_CType const &>(*this);
+		}
+
 		template <typename tf_CFormatter>
 		auto f_CreateStringFormatter(tf_CFormatter &_Formatter) const
 		{
