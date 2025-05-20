@@ -242,9 +242,9 @@ namespace
 		{
 			{
 				DMibTestPath("Normal");;
-				typename NMib::NTraits::TCRemovePointer<tf_CType>::CType RawValues[4] = {};
+				NMib::NTraits::TCRemovePointer<tf_CType> RawValues[4] = {};
 				tf_CType Value;
-				if constexpr (NMib::NTraits::TCIsPointer<tf_CType>::mc_Value)
+				if constexpr (NMib::NTraits::cIsPointer<tf_CType>)
 					Value = RawValues;
 				else
 					Value = 0;
@@ -254,9 +254,9 @@ namespace
 			}
 			{
 				DMibTestPath("Aggregate");
-				typename NMib::NTraits::TCRemovePointer<tf_CType>::CType RawValues[4] = {};
+				NMib::NTraits::TCRemovePointer<tf_CType> RawValues[4] = {};
 				tf_CType Value;
-				if constexpr (NMib::NTraits::TCIsPointer<tf_CType>::mc_Value)
+				if constexpr (NMib::NTraits::cIsPointer<tf_CType>)
 					Value = RawValues;
 				else
 					Value = 0;

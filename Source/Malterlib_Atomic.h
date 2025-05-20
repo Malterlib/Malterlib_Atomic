@@ -44,7 +44,7 @@ namespace NMib::NAtomic
 			return *(reinterpret_cast<std::atomic<t_CType> const volatile *>(&m_Storage));
 		}
 
-		typedef typename NMib::NTraits::TCUnsigned<typename NMib::NTraits::TCIntFromSize<sizeof(std::atomic<t_CType>)>::CType>::CType CStorage;
+		using CStorage = NMib::NTraits::TCUnsigned<NMib::NTraits::TCIntFromSize<sizeof(std::atomic<t_CType>)>>;
 
 		static constexpr bool mc_bIsAlwaysLockFree = std::atomic<t_CType>::is_always_lock_free;
 	public:
@@ -598,7 +598,7 @@ namespace NMib::NAtomic
 			return *(reinterpret_cast<std::atomic_flag const volatile *>(&m_Storage));
 		}
 
-		typedef NMib::NTraits::TCUnsigned<NMib::NTraits::TCIntFromSize<sizeof(std::atomic_flag)>::CType>::CType CStorage;
+		using CStorage = NMib::NTraits::TCUnsigned<NMib::NTraits::TCIntFromSize<sizeof(std::atomic_flag)>>;
 	public:
 		CStorage m_Storage;
 
