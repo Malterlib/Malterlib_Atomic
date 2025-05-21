@@ -305,7 +305,7 @@ namespace NMib::NAtomic
 
 		static constexpr bool mc_bIsAlwaysLockFree = std::atomic<t_CType>::is_always_lock_free;
 
-		typedef std::atomic<t_CType> CSuper;
+		using CSuper = std::atomic<t_CType>;
 
 		constexpr TCAtomic() noexcept // = default;
 			: CSuper(0)
@@ -624,7 +624,7 @@ namespace NMib::NAtomic
 
 	class CAtomicFlag : protected std::atomic_flag
 	{
-		typedef std::atomic_flag CSuper;
+		using CSuper = std::atomic_flag;
 	public:
 		inline_always CAtomicFlag() noexcept
 			: CSuper{}
