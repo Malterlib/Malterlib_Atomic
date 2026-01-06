@@ -1,4 +1,4 @@
-// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #include <Mib/Atomic/Atomic>
@@ -8,7 +8,7 @@ namespace
 
 	using namespace NMib::NAtomic;
 	TCAtomicAggregate<bool> g_TestInit_bool = DMibAtomicInit(false);
-	
+
 	TCAtomicAggregate<int8> g_TestInit_int8 = DMibAtomicInit(1);
 	TCAtomicAggregate<int16> g_TestInit_int16 = DMibAtomicInit(2);
 	TCAtomicAggregate<int32> g_TestInit_int32 = DMibAtomicInit(3);
@@ -27,32 +27,32 @@ namespace
 	TCAtomicAggregate<smint> g_TestInit_smint = DMibAtomicInit(13);
 	TCAtomicAggregate<aint> g_TestInit_aint = DMibAtomicInit(14);
 	TCAtomicAggregate<uaint> g_TestInit_uaint = DMibAtomicInit(15);
-	
+
 	CAtomicFlagAggregate g_TestInit_Flag = DMibAtomicFlagInit;
-	
+
 	void fg_ReferenceVars()
 	{
 		(void)g_TestInit_bool;
-		
+
 		(void)g_TestInit_int8;
 		(void)g_TestInit_int16;
 		(void)g_TestInit_int32;
 		(void)g_TestInit_int64;
-		
+
 		(void)g_TestInit_uint8;
 		(void)g_TestInit_uint16;
 		(void)g_TestInit_uint32;
 		(void)g_TestInit_uint64;
-		
+
 		(void)g_TestInit_ch8;
 		(void)g_TestInit_ch16;
 		(void)g_TestInit_ch32;
-		
+
 		(void)g_TestInit_mint;
 		(void)g_TestInit_smint;
 		(void)g_TestInit_aint;
 		(void)g_TestInit_uaint;
-		
+
 		(void)g_TestInit_Flag;
 	}
 
@@ -61,7 +61,7 @@ namespace
 #else
 	static constexpr mint gc_Iterations = 64 * 1024;
 #endif
-	
+
 	class CAtomic_Tests : public NMib::NTest::CTest
 	{
 	public:
@@ -265,7 +265,7 @@ namespace
 				f_TestIntegerAndPointerGeneric(_Name, Atomic, Value);
 			}
 		}
-		
+
 		template <typename tf_CType, typename tf_CAtomicType>
 		void f_TestIntegerAndPointerGeneric(NMib::NStr::CStr const &_Name, tf_CAtomicType &_Atomic0, tf_CType &_Value)
 		{
@@ -318,7 +318,7 @@ namespace
 				f_TestIntegerGeneric<tf_CType>(_Name, Atomic);
 			}
 		}
-		
+
 		template <typename tf_CType, typename tf_CAtomicType>
 		void f_TestIntegerGeneric(NMib::NStr::CStr const &_Name, tf_CAtomicType &_Atomic0)
 		{
@@ -366,12 +366,12 @@ namespace
 				f_TestAtomicFlagGeneric(Atomic);
 			}
 		}
-		
+
 		template <typename tf_CAtomicType>
 		void f_TestAtomicFlagGeneric(tf_CAtomicType &_Atomic0)
 		{
 			auto &Flag = _Atomic0;
-			
+
 			DMibTestPath("Atomic flag");
 
 			NMib::NContainer::TCVector<NMib::NStorage::TCUniquePointer<NMib::NThread::CThreadObject>> Threads;
@@ -468,7 +468,7 @@ namespace
 			DMibTest(DMibExpr(FinalResult) == DMibExpr(ToCheck));
 			DMibTest(DMibExpr(FinalResult2) == DMibExpr(ToCheck2));
 		}
-		
+
 		void f_DoTests()
 		{
 			DMibTestSuite("AtomicFlag")
@@ -486,7 +486,7 @@ namespace
 				f_TestShared<uint16>("uint16");
 				f_TestShared<uint32>("uint32");
 				f_TestShared<uint64>("uint64");
-				
+
 				f_TestShared<ch8>("ch8");
 				f_TestShared<ch16>("ch16");
 				f_TestShared<ch32>("ch32");
@@ -508,11 +508,11 @@ namespace
 				f_TestIntegerAndPointer<uint16>("uint16");
 				f_TestIntegerAndPointer<uint32>("uint32");
 				f_TestIntegerAndPointer<uint64>("uint64");
-				
+
 				f_TestIntegerAndPointer<ch8>("ch8");
 				f_TestIntegerAndPointer<ch16>("ch16");
 				f_TestIntegerAndPointer<ch32>("ch32");
-				
+
 				f_TestIntegerAndPointer<mint>("mint");
 				f_TestIntegerAndPointer<smint>("smint");
 				f_TestIntegerAndPointer<aint>("aint");
@@ -529,11 +529,11 @@ namespace
 				f_TestInteger<uint16>("uint16");
 				f_TestInteger<uint32>("uint32");
 				f_TestInteger<uint64>("uint64");
-				
+
 				f_TestInteger<ch8>("ch8");
 				f_TestInteger<ch16>("ch16");
 				f_TestInteger<ch32>("ch32");
-				
+
 				f_TestInteger<mint>("mint");
 				f_TestInteger<smint>("smint");
 				f_TestInteger<aint>("aint");
