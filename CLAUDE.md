@@ -159,8 +159,7 @@ if (!Flag.f_TestAndSet()) {
 ### Testing
 Tests are located in `Test/Test_Malterlib_Atomic.cpp` and are included in the Tests workspace:
 ```bash
-MalterlibBuildShowProgress=false ./mib build Tests macOS arm64 Debug
-/opt/Deploy/Tests/RunAllTests --paths '["Malterlib/Atomic/*"]'
+MalterlibBuildShowProgress=false ./mib test --paths '["Malterlib/Atomic/*"]'
 ```
 
 ## Dependencies
