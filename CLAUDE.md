@@ -38,27 +38,12 @@ Atomic/
   - Memory ordering control
   - Volatile support for memory-mapped I/O
 
-### TCAtomicAggregate Template (Legacy)
-- **Purpose**: Legacy atomic type for pre-constexpr C++ standards
-- **Location**: `Source/Malterlib_Atomic.h`
-- **Note**: This is legacy code from before C++ had constexpr support. Modern code should use TCAtomic instead.
-- **Historical Context**: Before constexpr was available in the C++ standard, this template provided aggregate initialization support for static/global atomic variables using the `DMibAtomicInit` macro
-
 ### CAtomicFlag
 - **Purpose**: Main atomic flag wrapper around std::atomic_flag
 - **Features**:
   - Inherits from std::atomic_flag
   - Test-and-set and clear operations
   - Always lock-free by specification
-
-### CAtomicFlagAggregate (Legacy)
-- **Purpose**: Legacy atomic flag type for pre-constexpr C++ standards
-- **Features**:
-  - Always lock-free
-  - Test-and-set operations
-  - Clear operations with memory ordering
-  - Aggregate initialization using `DMibAtomicFlagInit` macro
-- **Note**: Legacy code from before C++ had constexpr support. Modern code should use CAtomicFlag instead.
 
 ### Memory Ordering
 The module provides the following memory ordering options:
@@ -177,8 +162,6 @@ MalterlibBuildShowProgress=false ./mib test --paths '["Malterlib/Atomic/*"]'
 - All atomic types support volatile qualifiers for memory-mapped I/O scenarios
 - Lock-free status can be checked at compile-time (`mc_bIsAlwaysLockFree`) or runtime (`f_IsLockFree()`)
 - The module is header-only for most functionality to ensure inlining of atomic operations
-- The aggregate versions (`TCAtomicAggregate`, `CAtomicFlagAggregate`) are legacy code from before C++ had constexpr support
-- The `DMibAtomicInit` and `DMibAtomicFlagInit` macros are legacy and not needed with modern C++
 
 ## Common Patterns
 

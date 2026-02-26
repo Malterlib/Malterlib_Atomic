@@ -7,28 +7,55 @@ namespace
 {
 
 	using namespace NMib::NAtomic;
-	TCAtomicAggregate<bool> g_TestInit_bool = DMibAtomicInit(false);
+	constinit TCAtomic<bool> g_TestInit_bool{false};
+	static_assert(sizeof(g_TestInit_bool) == 1);
 
-	TCAtomicAggregate<int8> g_TestInit_int8 = DMibAtomicInit(1);
-	TCAtomicAggregate<int16> g_TestInit_int16 = DMibAtomicInit(2);
-	TCAtomicAggregate<int32> g_TestInit_int32 = DMibAtomicInit(3);
-	TCAtomicAggregate<int64> g_TestInit_int64 = DMibAtomicInit(4);
+	constinit TCAtomic<int8> g_TestInit_int8{1};
+	static_assert(sizeof(g_TestInit_int8) == 1);
 
-	TCAtomicAggregate<uint8> g_TestInit_uint8 = DMibAtomicInit(5);
-	TCAtomicAggregate<uint16> g_TestInit_uint16 = DMibAtomicInit(6);
-	TCAtomicAggregate<uint32> g_TestInit_uint32 = DMibAtomicInit(7);
-	TCAtomicAggregate<uint64> g_TestInit_uint64 = DMibAtomicInit(8);
+	constinit TCAtomic<int16> g_TestInit_int16{2};
+	static_assert(sizeof(g_TestInit_int16) == 2);
 
-	TCAtomicAggregate<ch8> g_TestInit_ch8 = DMibAtomicInit(9);
-	TCAtomicAggregate<ch16> g_TestInit_ch16 = DMibAtomicInit(10);
-	TCAtomicAggregate<ch32> g_TestInit_ch32 = DMibAtomicInit(11);
+	constinit TCAtomic<int32> g_TestInit_int32{3};
+	static_assert(sizeof(g_TestInit_int32) == 4);
 
-	TCAtomicAggregate<mint> g_TestInit_mint = DMibAtomicInit(12);
-	TCAtomicAggregate<smint> g_TestInit_smint = DMibAtomicInit(13);
-	TCAtomicAggregate<aint> g_TestInit_aint = DMibAtomicInit(14);
-	TCAtomicAggregate<uaint> g_TestInit_uaint = DMibAtomicInit(15);
+	constinit TCAtomic<int64> g_TestInit_int64{4};
+	static_assert(sizeof(g_TestInit_int64) == 8);
 
-	CAtomicFlagAggregate g_TestInit_Flag = DMibAtomicFlagInit;
+	constinit TCAtomic<uint8> g_TestInit_uint8{5};
+	static_assert(sizeof(g_TestInit_uint8) == 1);
+
+	constinit TCAtomic<uint16> g_TestInit_uint16{6};
+	static_assert(sizeof(g_TestInit_uint16) == 2);
+
+	constinit TCAtomic<uint32> g_TestInit_uint32{7};
+	static_assert(sizeof(g_TestInit_uint32) == 4);
+
+	constinit TCAtomic<uint64> g_TestInit_uint64{8};
+	static_assert(sizeof(g_TestInit_uint64) == 8);
+
+	constinit TCAtomic<ch8> g_TestInit_ch8{9};
+	static_assert(sizeof(g_TestInit_ch8) == 1);
+
+	constinit TCAtomic<ch16> g_TestInit_ch16{10};
+	static_assert(sizeof(g_TestInit_ch16) == 2);
+
+	constinit TCAtomic<ch32> g_TestInit_ch32{11};
+	static_assert(sizeof(g_TestInit_ch32) == 4);
+
+	constinit TCAtomic<mint> g_TestInit_mint{12};
+	static_assert(sizeof(g_TestInit_mint) == sizeof(mint));
+
+	constinit TCAtomic<smint> g_TestInit_smint{13};
+	static_assert(sizeof(g_TestInit_smint) == sizeof(smint));
+
+	constinit TCAtomic<aint> g_TestInit_aint{14};
+	static_assert(sizeof(g_TestInit_aint) == sizeof(aint));
+
+	constinit TCAtomic<uaint> g_TestInit_uaint{15};
+	static_assert(sizeof(g_TestInit_uaint) == sizeof(uaint));
+
+	constinit CAtomicFlag g_TestInit_Flag{};
 
 	void fg_ReferenceVars()
 	{
@@ -76,12 +103,6 @@ namespace
 				TCAtomic<tf_CType> Atomic1;
 				f_TestSharedGeneric<tf_CType>(_Name, Atomic0, Atomic1);
 			}
-			{
-				DMibTestPath("Aggregate");
-				TCAtomicAggregate<tf_CType> Atomic0 = DMibAtomicInit(0);
-				TCAtomicAggregate<tf_CType> Atomic1 = DMibAtomicInit(0);
-				f_TestSharedGeneric<tf_CType>(_Name, Atomic0, Atomic1);
-			}
 		}
 
 		template <typename tf_CType, typename tf_CAtomicType>
@@ -101,17 +122,14 @@ namespace
 				for (int i = 0; i < 32; ++i)
 					ToCheck2[(tf_CType)(mint)NMib::NMisc::fg_GetRandom()];
 
-
 				NMib::NThread::CMutual Lock;
 
 				NMib::NContainer::TCSet<tf_CType> FinalResult;
-				NMib::NContainer::TCSet<tf_CType> FinalResult2;
 
 				auto iToCheck = ToCheck.f_GetIterator();
 				Atomic.f_Store(*iToCheck);
 				++iToCheck;
 
-				DMibTest(DMibExpr(fg_AtomicIsLockFree(Atomic)));
 				DMibTest(DMibExpr(Atomic.f_IsLockFree()));
 
 				for (; iToCheck; ++iToCheck)
@@ -142,44 +160,11 @@ namespace
 					;
 				}
 
-				auto iToCheck2 = ToCheck2.f_GetIterator();
-				fg_AtomicStore(Atomic2, *iToCheck2);
-				++iToCheck2;
-
-				for (; iToCheck2; ++iToCheck2)
-				{
-					auto This2 = *iToCheck2;
-					Threads.f_Insert
-						(
-							NMib::NThread::CThreadObject::fs_StartThread
-							(
-								[&, This2](NMib::NThread::CThreadObject *_pThreadObject) -> aint
-								{
-									fg_CompilerFence();
-									auto ThisLocal2 = This2;
-									for (int i = 0; i < gc_Iterations; ++i)
-									{
-										ThisLocal2 = fg_AtomicExchange(Atomic2, ThisLocal2);
-									}
-									{
-										DMibLock(Lock);
-										FinalResult2[ThisLocal2];
-									}
-									return 0;
-								}
-								, "TestThread"
-							 )
-						)
-					;
-				}
-
 				Threads.f_Clear();
 
 				FinalResult[Atomic.f_Load()];
-				FinalResult2[fg_AtomicLoad(Atomic2)];
 
 				DMibTest(DMibExpr(FinalResult) == DMibExpr(ToCheck));
-				DMibTest(DMibExpr(FinalResult2) == DMibExpr(ToCheck2));
 			}
 
 			// Functions
@@ -209,32 +194,6 @@ namespace
 				DMibTest(DMibExpr(Expected) == DMibExpr((tf_CType)0) && DMibExpr("Third"));
 
 			}
-			{
-				DMibTestPath("Global functions");
-				Atomic.f_Store(0);
-
-				tf_CType Expected = (tf_CType)0;
-				while (!fg_AtomicCompareExchangeWeak(Atomic, Expected, (tf_CType)1))
-					;
-				DMibTest(DMibExpr(fg_AtomicLoad(Atomic)) == DMibExpr((tf_CType)1));
-				DMibTest(DMibExpr(Expected) == DMibExpr((tf_CType)0));
-
-				Expected = (tf_CType)0;
-				DMibTest(!DMibExpr(fg_AtomicCompareExchangeWeak(Atomic, Expected, (tf_CType)0)));
-				DMibTest(DMibExpr(fg_AtomicLoad(Atomic)) == DMibExpr((tf_CType)1) && DMibExpr("Second"));
-				DMibTest(DMibExpr(Expected) == DMibExpr((tf_CType)1));
-
-				Expected = (tf_CType)1;
-				DMibTest(DMibExpr(fg_AtomicCompareExchangeStrong(Atomic, Expected, (tf_CType)0)));
-				DMibTest(DMibExpr(fg_AtomicLoad(Atomic)) == DMibExpr((tf_CType)0));
-				DMibTest(DMibExpr(Expected) == DMibExpr((tf_CType)1) && DMibExpr("Second"));
-
-				Expected = (tf_CType)1;
-				DMibTest(!DMibExpr(fg_AtomicCompareExchangeStrong(Atomic, Expected, (tf_CType)0)));
-				DMibTest(DMibExpr(fg_AtomicLoad(Atomic)) == DMibExpr((tf_CType)0) && DMibExpr("Second"));
-				DMibTest(DMibExpr(Expected) == DMibExpr((tf_CType)0) && DMibExpr("Third"));
-
-			}
 		}
 
 		template <typename tf_CType>
@@ -252,18 +211,6 @@ namespace
 				TCAtomic<tf_CType> Atomic;
 				f_TestIntegerAndPointerGeneric(_Name, Atomic, Value);
 			}
-			{
-				DMibTestPath("Aggregate");
-				NMib::NTraits::TCRemovePointer<tf_CType> RawValues[4] = {};
-				tf_CType Value;
-				if constexpr (NMib::NTraits::cIsPointer<tf_CType>)
-					Value = RawValues;
-				else
-					Value = 0;
-
-				TCAtomicAggregate<tf_CType> Atomic = DMibAtomicInit(0);
-				f_TestIntegerAndPointerGeneric(_Name, Atomic, Value);
-			}
 		}
 
 		template <typename tf_CType, typename tf_CAtomicType>
@@ -275,7 +222,7 @@ namespace
 			{
 				DMibTestPath("Members");
 				auto Value = _Value;
-				fg_AtomicStore(Atomic, Value);
+				Atomic.f_Store(Value);
 
 				DMibTest(DMibExpr(Atomic.f_FetchAdd(1)) == DMibExpr(Value));
 				Value += 1;
@@ -292,16 +239,6 @@ namespace
 				Value -= 2;
 
 			}
-			{
-				DMibTestPath("Global functions");
-				auto Value = _Value;
-				fg_AtomicStore(Atomic, Value);
-
-				DMibTest(DMibExpr(fg_AtomicFetchAdd(Atomic, 1)) == DMibExpr(Value));
-				Value += 1;
-				DMibTest(DMibExpr(fg_AtomicFetchSub(Atomic, 1)) == DMibExpr(Value));
-
-			}
 		}
 
 		template <typename tf_CType>
@@ -310,11 +247,6 @@ namespace
 			{
 				DMibTestPath("Normal");
 				TCAtomic<tf_CType> Atomic(7);
-				f_TestIntegerGeneric<tf_CType>(_Name, Atomic);
-			}
-			{
-				DMibTestPath("Aggregate");
-				TCAtomicAggregate<tf_CType> Atomic = DMibAtomicInit(7);
 				f_TestIntegerGeneric<tf_CType>(_Name, Atomic);
 			}
 		}
@@ -342,15 +274,6 @@ namespace
 				DMibTest(DMibExpr(Atomic ^= 2) == DMibExpr(7)); // = 5
 				DMibTest(DMibExpr(Atomic.f_Load()) == DMibExpr(5));
 			}
-			{
-				DMibTestPath("Global functions");
-				fg_AtomicExchange(Atomic, 7);
-
-				DMibTest(DMibExpr(fg_AtomicFetchAnd(Atomic, 5)) == DMibExpr(7)); // = 5
-				DMibTest(DMibExpr(fg_AtomicFetchOr(Atomic, 2)) == DMibExpr(5)); // = 7
-				DMibTest(DMibExpr(fg_AtomicFetchXor(Atomic, 2)) == DMibExpr(7)); // = 5
-				DMibTest(DMibExpr(fg_AtomicLoad(Atomic)) == DMibExpr(5));
-			}
 		}
 
 		void f_TestAtomicFlag()
@@ -358,11 +281,6 @@ namespace
 			{
 				DMibTestPath("Normal");
 				CAtomicFlag Atomic;
-				f_TestAtomicFlagGeneric(Atomic);
-			}
-			{
-				DMibTestPath("Aggregate");
-				CAtomicFlagAggregate Atomic = DMibAtomicFlagInit;
 				f_TestAtomicFlagGeneric(Atomic);
 			}
 		}
@@ -425,48 +343,11 @@ namespace
 				;
 			}
 
-			auto iToCheck2 = ToCheck2.f_GetIterator();
-			int8 Atomic2;
-			Atomic2 = *iToCheck2;
-			++iToCheck2;
-
-			for (; iToCheck2; ++iToCheck2)
-			{
-				auto This2 = *iToCheck2;
-				Threads.f_Insert
-					(
-						NMib::NThread::CThreadObject::fs_StartThread
-						(
-							[&, This2](NMib::NThread::CThreadObject *_pThreadObject) -> aint
-							{
-								fg_CompilerFence();
-								auto ThisLocal2 = This2;
-								for (int i = 0; i < gc_Iterations; ++i)
-								{
-									while (fg_AtomicFlagTestAndSet(Flag))
-										NMib::NSys::fg_Thread_Yield();
-									NMib::fg_Swap(ThisLocal2, Atomic2);
-									fg_AtomicFlagClear(Flag);
-								}
-								{
-									DMibLock(Lock);
-									FinalResult2[ThisLocal2];
-								}
-								return 0;
-							}
-							, "TestThread"
-						 )
-					)
-				;
-			}
-
 			Threads.f_Clear();
 
 			FinalResult[Atomic];
-			FinalResult2[Atomic2];
 
 			DMibTest(DMibExpr(FinalResult) == DMibExpr(ToCheck));
-			DMibTest(DMibExpr(FinalResult2) == DMibExpr(ToCheck2));
 		}
 
 		void f_DoTests()
