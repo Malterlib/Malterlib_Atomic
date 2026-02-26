@@ -47,12 +47,12 @@ Atomic/
 
 ### Memory Ordering
 The module provides the following memory ordering options:
-- `EMemoryOrder_Relaxed` - No synchronization or ordering constraints
-- `EMemoryOrder_Consume` - Data dependency ordering for reads
-- `EMemoryOrder_Acquire` - Synchronize with release operations
-- `EMemoryOrder_Release` - Synchronize with acquire operations
-- `EMemoryOrder_AcquireRelease` - Both acquire and release semantics
-- `EMemoryOrder_SequentiallyConsistent` - Total ordering (default)
+- `gc_MemoryOrder_Relaxed` - No synchronization or ordering constraints
+- `gc_MemoryOrder_Consume` - Data dependency ordering for reads
+- `gc_MemoryOrder_Acquire` - Synchronize with release operations
+- `gc_MemoryOrder_Release` - Synchronize with acquire operations
+- `gc_MemoryOrder_AcquireRelease` - Both acquire and release semantics
+- `gc_MemoryOrder_SequentiallyConsistent` - Total ordering (default)
 
 ## Usage Guidelines
 
@@ -113,11 +113,11 @@ LocalCounter ^= 0xF0; // Returns old value
 ### Memory Ordering
 ```cpp
 // Relaxed ordering for statistics/counters
-Counter.f_FetchAdd(1, EMemoryOrder_Relaxed);
+Counter.f_FetchAdd(1, gc_MemoryOrder_Relaxed);
 
 // Acquire-release for synchronization
-Flag.f_Store(true, EMemoryOrder_Release);
-if (Flag.f_Load(EMemoryOrder_Acquire)) {
+Flag.f_Store(true, gc_MemoryOrder_Release);
+if (Flag.f_Load(gc_MemoryOrder_Acquire)) {
     // Synchronized access to shared data
 }
 ```
@@ -170,7 +170,7 @@ MalterlibBuildShowProgress=false ./mib test --paths '["Malterlib/Atomic/*"]'
 constinit TCAtomic<uint64> g_RequestCount(0);
 
 void HandleRequest() {
-    g_RequestCount.f_FetchAdd(1, EMemoryOrder_Relaxed);
+    g_RequestCount.f_FetchAdd(1, gc_MemoryOrder_Relaxed);
     // Process request...
 }
 ```
@@ -181,14 +181,14 @@ constinit TCAtomic<bool> g_DataReady(false);
 constinit TCAtomic<int> g_Data(0);
 
 // Producer
-g_Data.f_Store(42, EMemoryOrder_Relaxed);
-g_DataReady.f_Store(true, EMemoryOrder_Release);
+g_Data.f_Store(42, gc_MemoryOrder_Relaxed);
+g_DataReady.f_Store(true, gc_MemoryOrder_Release);
 
 // Consumer
-while (!g_DataReady.f_Load(EMemoryOrder_Acquire)) {
+while (!g_DataReady.f_Load(gc_MemoryOrder_Acquire)) {
     // Wait for data
 }
-int Data = g_Data.f_Load(EMemoryOrder_Relaxed);
+int Data = g_Data.f_Load(gc_MemoryOrder_Relaxed);
 ```
 
 ### Spinlock Pattern
@@ -196,12 +196,12 @@ int Data = g_Data.f_Load(EMemoryOrder_Relaxed);
 CAtomicFlag g_Lock;
 
 void CriticalSection() {
-    while (g_Lock.f_TestAndSet(EMemoryOrder_Acquire)) {
+    while (g_Lock.f_TestAndSet(gc_MemoryOrder_Acquire)) {
         // Spin
     }
 
     // Critical section code...
 
-    g_Lock.f_Clear(EMemoryOrder_Release);
+    g_Lock.f_Clear(gc_MemoryOrder_Release);
 }
 ```

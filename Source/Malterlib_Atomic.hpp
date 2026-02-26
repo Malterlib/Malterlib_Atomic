@@ -35,25 +35,25 @@ namespace NMib::NAtomic
 	}
 
 	template <typename t_CType>
-	constexpr void TCAtomicIndeterminate<t_CType>::f_Store(t_CType _Value, EMemoryOrder _Order) noexcept
+	constexpr void TCAtomicIndeterminate<t_CType>::f_Store(t_CType _Value, CMemoryOrder _Order) noexcept
 	{
 		std::atomic_ref<t_CType>(m_Value).store(_Value, _Order);
 	}
 
 	template <typename t_CType>
-	constexpr void TCAtomicIndeterminate<t_CType>::f_Store(t_CType _Value, EMemoryOrder _Order) volatile noexcept
+	constexpr void TCAtomicIndeterminate<t_CType>::f_Store(t_CType _Value, CMemoryOrder _Order) volatile noexcept
 	{
 		std::atomic_ref<t_CType>(const_cast<t_CType &>(m_Value)).store(_Value, _Order);
 	}
 
 	template <typename t_CType>
-	constexpr t_CType TCAtomicIndeterminate<t_CType>::f_Load(EMemoryOrder _Order) const noexcept
+	constexpr t_CType TCAtomicIndeterminate<t_CType>::f_Load(CMemoryOrder _Order) const noexcept
 	{
 		return std::atomic_ref<t_CType>(const_cast<t_CType &>(m_Value)).load(_Order);
 	}
 
 	template <typename t_CType>
-	constexpr t_CType TCAtomicIndeterminate<t_CType>::f_Load(EMemoryOrder _Order) const volatile noexcept
+	constexpr t_CType TCAtomicIndeterminate<t_CType>::f_Load(CMemoryOrder _Order) const volatile noexcept
 	{
 		return std::atomic_ref<t_CType>(const_cast<t_CType &>(m_Value)).load(_Order);
 	}
@@ -71,131 +71,131 @@ namespace NMib::NAtomic
 	}
 
 	template <typename t_CType>
-	t_CType TCAtomicIndeterminate<t_CType>::f_Exchange(t_CType _Value, EMemoryOrder _Order) noexcept
+	t_CType TCAtomicIndeterminate<t_CType>::f_Exchange(t_CType _Value, CMemoryOrder _Order) noexcept
 	{
 		return std::atomic_ref<t_CType>(m_Value).exchange(_Value, _Order);
 	}
 
 	template <typename t_CType>
-	t_CType TCAtomicIndeterminate<t_CType>::f_Exchange(t_CType _Value, EMemoryOrder _Order) volatile noexcept
+	t_CType TCAtomicIndeterminate<t_CType>::f_Exchange(t_CType _Value, CMemoryOrder _Order) volatile noexcept
 	{
 		return std::atomic_ref<t_CType>(const_cast<t_CType &>(m_Value)).exchange(_Value, _Order);
 	}
 
 	template <typename t_CType>
-	bool TCAtomicIndeterminate<t_CType>::f_CompareExchangeWeak(t_CType &_Expected, t_CType _Desired, EMemoryOrder _SuccessOrder, EMemoryOrder _FailureOrder) noexcept
+	bool TCAtomicIndeterminate<t_CType>::f_CompareExchangeWeak(t_CType &_Expected, t_CType _Desired, CMemoryOrder _SuccessOrder, CMemoryOrder _FailureOrder) noexcept
 	{
 		return std::atomic_ref<t_CType>(m_Value).compare_exchange_weak(_Expected, _Desired, _SuccessOrder, _FailureOrder);
 	}
 
 	template <typename t_CType>
-	bool TCAtomicIndeterminate<t_CType>::f_CompareExchangeWeak(t_CType &_Expected, t_CType _Desired, EMemoryOrder _SuccessOrder, EMemoryOrder _FailureOrder ) volatile noexcept
+	bool TCAtomicIndeterminate<t_CType>::f_CompareExchangeWeak(t_CType &_Expected, t_CType _Desired, CMemoryOrder _SuccessOrder, CMemoryOrder _FailureOrder ) volatile noexcept
 	{
 		return std::atomic_ref<t_CType>(const_cast<t_CType &>(m_Value)).compare_exchange_weak(_Expected, _Desired, _SuccessOrder, _FailureOrder);
 	}
 
 	template <typename t_CType>
-	bool TCAtomicIndeterminate<t_CType>::f_CompareExchangeWeak(t_CType &_Expected, t_CType _Desired, EMemoryOrder _Order) noexcept
+	bool TCAtomicIndeterminate<t_CType>::f_CompareExchangeWeak(t_CType &_Expected, t_CType _Desired, CMemoryOrder _Order) noexcept
 	{
 		return std::atomic_ref<t_CType>(m_Value).compare_exchange_weak(_Expected, _Desired, _Order);
 	}
 
 	template <typename t_CType>
-	bool TCAtomicIndeterminate<t_CType>::f_CompareExchangeWeak(t_CType &_Expected, t_CType _Desired, EMemoryOrder _Order) volatile noexcept
+	bool TCAtomicIndeterminate<t_CType>::f_CompareExchangeWeak(t_CType &_Expected, t_CType _Desired, CMemoryOrder _Order) volatile noexcept
 	{
 		return std::atomic_ref<t_CType>(const_cast<t_CType &>(m_Value)).compare_exchange_weak(_Expected, _Desired, _Order);
 	}
 
 	template <typename t_CType>
-	bool TCAtomicIndeterminate<t_CType>::f_CompareExchangeStrong(t_CType &_Expected, t_CType _Desired, EMemoryOrder _SuccessOrder, EMemoryOrder _FailureOrder) noexcept
+	bool TCAtomicIndeterminate<t_CType>::f_CompareExchangeStrong(t_CType &_Expected, t_CType _Desired, CMemoryOrder _SuccessOrder, CMemoryOrder _FailureOrder) noexcept
 	{
 		return std::atomic_ref<t_CType>(m_Value).compare_exchange_strong(_Expected, _Desired, _SuccessOrder, _FailureOrder);
 	}
 
 	template <typename t_CType>
-	bool TCAtomicIndeterminate<t_CType>::f_CompareExchangeStrong(t_CType &_Expected, t_CType _Desired, EMemoryOrder _SuccessOrder, EMemoryOrder _FailureOrder ) volatile noexcept
+	bool TCAtomicIndeterminate<t_CType>::f_CompareExchangeStrong(t_CType &_Expected, t_CType _Desired, CMemoryOrder _SuccessOrder, CMemoryOrder _FailureOrder ) volatile noexcept
 	{
 		return std::atomic_ref<t_CType>(const_cast<t_CType &>(m_Value)).compare_exchange_strong(_Expected, _Desired, _SuccessOrder, _FailureOrder);
 	}
 
 	template <typename t_CType>
-	bool TCAtomicIndeterminate<t_CType>::f_CompareExchangeStrong(t_CType &_Expected, t_CType _Desired, EMemoryOrder _Order) noexcept
+	bool TCAtomicIndeterminate<t_CType>::f_CompareExchangeStrong(t_CType &_Expected, t_CType _Desired, CMemoryOrder _Order) noexcept
 	{
 		return std::atomic_ref<t_CType>(m_Value).compare_exchange_strong(_Expected, _Desired, _Order);
 	}
 
 	template <typename t_CType>
-	bool TCAtomicIndeterminate<t_CType>::f_CompareExchangeStrong(t_CType &_Expected, t_CType _Desired, EMemoryOrder _Order) volatile noexcept
+	bool TCAtomicIndeterminate<t_CType>::f_CompareExchangeStrong(t_CType &_Expected, t_CType _Desired, CMemoryOrder _Order) volatile noexcept
 	{
 		return std::atomic_ref<t_CType>(const_cast<t_CType &>(m_Value)).compare_exchange_strong(_Expected, _Desired, _Order);
 	}
 
 	template <typename t_CType>
 	template <typename tf_CType>
-	t_CType TCAtomicIndeterminate<t_CType>::f_FetchAdd(tf_CType _Value, EMemoryOrder _Order) noexcept
+	t_CType TCAtomicIndeterminate<t_CType>::f_FetchAdd(tf_CType _Value, CMemoryOrder _Order) noexcept
 	{
 		return std::atomic_ref<t_CType>(m_Value).fetch_add(_Value, _Order);
 	}
 
 	template <typename t_CType>
 	template <typename tf_CType>
-	t_CType TCAtomicIndeterminate<t_CType>::f_FetchAdd(tf_CType _Value, EMemoryOrder _Order) volatile noexcept
+	t_CType TCAtomicIndeterminate<t_CType>::f_FetchAdd(tf_CType _Value, CMemoryOrder _Order) volatile noexcept
 	{
 		return std::atomic_ref<t_CType>(const_cast<t_CType &>(m_Value)).fetch_add(_Value, _Order);
 	}
 
 	template <typename t_CType>
 	template <typename tf_CType>
-	t_CType TCAtomicIndeterminate<t_CType>::f_FetchSub(tf_CType _Value, EMemoryOrder _Order) noexcept
+	t_CType TCAtomicIndeterminate<t_CType>::f_FetchSub(tf_CType _Value, CMemoryOrder _Order) noexcept
 	{
 		return std::atomic_ref<t_CType>(m_Value).fetch_sub(_Value, _Order);
 	}
 
 	template <typename t_CType>
 	template <typename tf_CType>
-	t_CType TCAtomicIndeterminate<t_CType>::f_FetchSub(tf_CType _Value, EMemoryOrder _Order) volatile noexcept
+	t_CType TCAtomicIndeterminate<t_CType>::f_FetchSub(tf_CType _Value, CMemoryOrder _Order) volatile noexcept
 	{
 		return std::atomic_ref<t_CType>(const_cast<t_CType &>(m_Value)).fetch_sub(_Value, _Order);
 	}
 
 	template <typename t_CType>
 	template <typename tf_CType>
-	t_CType TCAtomicIndeterminate<t_CType>::f_FetchAnd(tf_CType _Value, EMemoryOrder _Order) noexcept
+	t_CType TCAtomicIndeterminate<t_CType>::f_FetchAnd(tf_CType _Value, CMemoryOrder _Order) noexcept
 	{
 		return std::atomic_ref<t_CType>(m_Value).fetch_and(_Value, _Order);
 	}
 
 	template <typename t_CType>
 	template <typename tf_CType>
-	t_CType TCAtomicIndeterminate<t_CType>::f_FetchAnd(tf_CType _Value, EMemoryOrder _Order) volatile noexcept
+	t_CType TCAtomicIndeterminate<t_CType>::f_FetchAnd(tf_CType _Value, CMemoryOrder _Order) volatile noexcept
 	{
 		return std::atomic_ref<t_CType>(const_cast<t_CType &>(m_Value)).fetch_and(_Value, _Order);
 	}
 
 	template <typename t_CType>
 	template <typename tf_CType>
-	t_CType TCAtomicIndeterminate<t_CType>::f_FetchOr(tf_CType _Value, EMemoryOrder _Order) noexcept
+	t_CType TCAtomicIndeterminate<t_CType>::f_FetchOr(tf_CType _Value, CMemoryOrder _Order) noexcept
 	{
 		return std::atomic_ref<t_CType>(m_Value).fetch_or(_Value, _Order);
 	}
 
 	template <typename t_CType>
 	template <typename tf_CType>
-	t_CType TCAtomicIndeterminate<t_CType>::f_FetchOr(tf_CType _Value, EMemoryOrder _Order) volatile noexcept
+	t_CType TCAtomicIndeterminate<t_CType>::f_FetchOr(tf_CType _Value, CMemoryOrder _Order) volatile noexcept
 	{
 		return std::atomic_ref<t_CType>(const_cast<t_CType &>(m_Value)).fetch_or(_Value, _Order);
 	}
 
 	template <typename t_CType>
 	template <typename tf_CType>
-	t_CType TCAtomicIndeterminate<t_CType>::f_FetchXor(tf_CType _Value, EMemoryOrder _Order) noexcept
+	t_CType TCAtomicIndeterminate<t_CType>::f_FetchXor(tf_CType _Value, CMemoryOrder _Order) noexcept
 	{
 		return std::atomic_ref<t_CType>(m_Value).fetch_xor(_Value, _Order);
 	}
 
 	template <typename t_CType>
 	template <typename tf_CType>
-	t_CType TCAtomicIndeterminate<t_CType>::f_FetchXor(tf_CType _Value, EMemoryOrder _Order) volatile noexcept
+	t_CType TCAtomicIndeterminate<t_CType>::f_FetchXor(tf_CType _Value, CMemoryOrder _Order) volatile noexcept
 	{
 		return std::atomic_ref<t_CType>(const_cast<t_CType &>(m_Value)).fetch_xor(_Value, _Order);
 	}
@@ -348,20 +348,20 @@ namespace NMib::NAtomic
 	{
 	}
 
-	inline_always bool CAtomicFlag::f_TestAndSet(EMemoryOrder _Order) volatile noexcept
+	inline_always bool CAtomicFlag::f_TestAndSet(CMemoryOrder _Order) volatile noexcept
 	{
 		return std::atomic_flag::test_and_set(_Order);
 	}
 
-	inline_always bool CAtomicFlag::f_TestAndSet(EMemoryOrder _Order) noexcept
+	inline_always bool CAtomicFlag::f_TestAndSet(CMemoryOrder _Order) noexcept
 	{
 		return std::atomic_flag::test_and_set(_Order);
 	}
-	inline_always void CAtomicFlag::f_Clear(EMemoryOrder _Order) volatile noexcept
+	inline_always void CAtomicFlag::f_Clear(CMemoryOrder _Order) volatile noexcept
 	{
 		return std::atomic_flag::clear(_Order);
 	}
-	inline_always void CAtomicFlag::f_Clear(EMemoryOrder _Order) noexcept
+	inline_always void CAtomicFlag::f_Clear(CMemoryOrder _Order) noexcept
 	{
 		return std::atomic_flag::clear(_Order);
 	}
@@ -372,12 +372,12 @@ namespace NMib::NAtomic
 		return std::kill_dependency(_Value);
 	}
 
-	inline_always void fg_MemoryFence(EMemoryOrder _Order) noexcept
+	inline_always void fg_MemoryFence(CMemoryOrder _Order) noexcept
 	{
 		return std::atomic_thread_fence(_Order);
 	}
 
-	inline_always void fg_CompilerFence(EMemoryOrder _Order) noexcept
+	inline_always void fg_CompilerFence(CMemoryOrder _Order) noexcept
 	{
 		return std::atomic_signal_fence(_Order);
 	}
