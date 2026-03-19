@@ -43,8 +43,8 @@ namespace
 	constinit TCAtomic<ch32> g_TestInit_ch32{11};
 	static_assert(sizeof(g_TestInit_ch32) == 4);
 
-	constinit TCAtomic<mint> g_TestInit_mint{12};
-	static_assert(sizeof(g_TestInit_mint) == sizeof(mint));
+	constinit TCAtomic<umint> g_TestInit_mint{12};
+	static_assert(sizeof(g_TestInit_mint) == sizeof(umint));
 
 	constinit TCAtomic<smint> g_TestInit_smint{13};
 	static_assert(sizeof(g_TestInit_smint) == sizeof(smint));
@@ -84,9 +84,9 @@ namespace
 	}
 
 #ifdef DMibSanitizerEnabled
-	static constexpr mint gc_Iterations = 8 * 1024;
+	static constexpr umint gc_Iterations = 8 * 1024;
 #else
-	static constexpr mint gc_Iterations = 64 * 1024;
+	static constexpr umint gc_Iterations = 64 * 1024;
 #endif
 
 	class CAtomic_Tests : public NMib::NTest::CTest
@@ -116,11 +116,11 @@ namespace
 
 				NMib::NContainer::TCSet<tf_CType> ToCheck;
 				for (int i = 0; i < 32; ++i)
-					ToCheck[(tf_CType)(mint)NMib::NMisc::fg_GetRandom()];
+					ToCheck[(tf_CType)(umint)NMib::NMisc::fg_GetRandom()];
 
 				NMib::NContainer::TCSet<tf_CType> ToCheck2;
 				for (int i = 0; i < 32; ++i)
-					ToCheck2[(tf_CType)(mint)NMib::NMisc::fg_GetRandom()];
+					ToCheck2[(tf_CType)(umint)NMib::NMisc::fg_GetRandom()];
 
 				NMib::NThread::CMutual Lock;
 
@@ -372,7 +372,7 @@ namespace
 				f_TestShared<ch16>("ch16");
 				f_TestShared<ch32>("ch32");
 
-				f_TestShared<mint>("mint");
+				f_TestShared<umint>("umint");
 				f_TestShared<smint>("smint");
 				f_TestShared<aint>("aint");
 				f_TestShared<uaint>("uaint");
@@ -394,7 +394,7 @@ namespace
 				f_TestIntegerAndPointer<ch16>("ch16");
 				f_TestIntegerAndPointer<ch32>("ch32");
 
-				f_TestIntegerAndPointer<mint>("mint");
+				f_TestIntegerAndPointer<umint>("umint");
 				f_TestIntegerAndPointer<smint>("smint");
 				f_TestIntegerAndPointer<aint>("aint");
 				f_TestIntegerAndPointer<uaint>("uaint");
@@ -415,7 +415,7 @@ namespace
 				f_TestInteger<ch16>("ch16");
 				f_TestInteger<ch32>("ch32");
 
-				f_TestInteger<mint>("mint");
+				f_TestInteger<umint>("umint");
 				f_TestInteger<smint>("smint");
 				f_TestInteger<aint>("aint");
 				f_TestInteger<uaint>("uaint");
