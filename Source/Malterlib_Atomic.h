@@ -19,9 +19,9 @@ namespace NMib::NAtomic
 	static constexpr auto gc_MemoryOrder_Relaxed = std::memory_order_relaxed; ///< Relaxed ordering
 	static constexpr auto gc_MemoryOrder_Consume = std::memory_order_consume; ///< Consume ordering
 	static constexpr auto gc_MemoryOrder_Acquire = std::memory_order_acquire; ///< Acquire ordering
-	static constexpr auto gc_MemoryOrder_Release = std::memory_order_release;	///< Release ordering
-	static constexpr auto gc_MemoryOrder_AcquireRelease = std::memory_order_acq_rel;	///< Acquire release ordering
-	static constexpr auto gc_MemoryOrder_SequentiallyConsistent = std::memory_order_seq_cst;	///< Sequentially consistent ordering
+	static constexpr auto gc_MemoryOrder_Release = std::memory_order_release; ///< Release ordering
+	static constexpr auto gc_MemoryOrder_AcquireRelease = std::memory_order_acq_rel; ///< Acquire release ordering
+	static constexpr auto gc_MemoryOrder_SequentiallyConsistent = std::memory_order_seq_cst; ///< Sequentially consistent ordering
 
 	template <typename t_CType>
 	struct TCAtomicIndeterminate
@@ -44,12 +44,12 @@ namespace NMib::NAtomic
 		t_CType f_Exchange(t_CType _Value, CMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) volatile noexcept;
 
 		bool f_CompareExchangeWeak(t_CType &_Expected, t_CType _Desired, CMemoryOrder _SuccessOrder, CMemoryOrder _FailureOrder) noexcept;
-		bool f_CompareExchangeWeak(t_CType &_Expected, t_CType _Desired, CMemoryOrder _SuccessOrder, CMemoryOrder _FailureOrder ) volatile noexcept;
+		bool f_CompareExchangeWeak(t_CType &_Expected, t_CType _Desired, CMemoryOrder _SuccessOrder, CMemoryOrder _FailureOrder) volatile noexcept;
 		bool f_CompareExchangeWeak(t_CType &_Expected, t_CType _Desired, CMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) noexcept;
 		bool f_CompareExchangeWeak(t_CType &_Expected, t_CType _Desired, CMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) volatile noexcept;
 
 		bool f_CompareExchangeStrong(t_CType &_Expected, t_CType _Desired, CMemoryOrder _SuccessOrder, CMemoryOrder _FailureOrder) noexcept;
-		bool f_CompareExchangeStrong(t_CType &_Expected, t_CType _Desired, CMemoryOrder _SuccessOrder, CMemoryOrder _FailureOrder ) volatile noexcept;
+		bool f_CompareExchangeStrong(t_CType &_Expected, t_CType _Desired, CMemoryOrder _SuccessOrder, CMemoryOrder _FailureOrder) volatile noexcept;
 		bool f_CompareExchangeStrong(t_CType &_Expected, t_CType _Desired, CMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) noexcept;
 		bool f_CompareExchangeStrong(t_CType &_Expected, t_CType _Desired, CMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) volatile noexcept;
 
@@ -146,6 +146,7 @@ namespace NMib::NAtomic
 	class CAtomicFlag : protected std::atomic_flag
 	{
 		using CSuper = std::atomic_flag;
+
 	public:
 		constexpr inline_always CAtomicFlag() noexcept;
 
@@ -164,7 +165,7 @@ namespace NMib::NAtomic
 }
 
 #ifndef DMibPNoShortCuts
-		using namespace NMib::NAtomic;
+using namespace NMib::NAtomic;
 #endif
 
 #include "Malterlib_Atomic.hpp"

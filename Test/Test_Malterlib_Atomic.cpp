@@ -5,7 +5,6 @@
 
 namespace
 {
-
 	using namespace NMib::NAtomic;
 	constinit TCAtomic<bool> g_TestInit_bool{false};
 	static_assert(sizeof(g_TestInit_bool) == 1);
@@ -92,7 +91,6 @@ namespace
 	class CAtomic_Tests : public NMib::NTest::CTest
 	{
 	public:
-
 		template <typename tf_CType>
 		void f_TestShared(NMib::NStr::CStr const &_Name)
 		{
@@ -144,9 +142,7 @@ namespace
 									NMib::NAtomic::fg_MemoryFence();
 									auto ThisLocal = This;
 									for (int i = 0; i < gc_Iterations; ++i)
-									{
 										ThisLocal = Atomic.f_Exchange(ThisLocal);
-									}
 									ThisLocal = fg_KillDependency(ThisLocal);
 									{
 										DMibLock(Lock);
@@ -192,7 +188,6 @@ namespace
 				DMibTest(!DMibExpr(Atomic.f_CompareExchangeStrong(Expected, (tf_CType)0)));
 				DMibTest(DMibExpr(Atomic.f_Load()) == DMibExpr((tf_CType)0) && DMibExpr("Second"));
 				DMibTest(DMibExpr(Expected) == DMibExpr((tf_CType)0) && DMibExpr("Third"));
-
 			}
 		}
 
@@ -200,7 +195,7 @@ namespace
 		void f_TestIntegerAndPointer(NMib::NStr::CStr const &_Name)
 		{
 			{
-				DMibTestPath("Normal");;
+				DMibTestPath("Normal");
 				NMib::NTraits::TCRemovePointer<tf_CType> RawValues[4] = {};
 				tf_CType Value;
 				if constexpr (NMib::NTraits::cIsPointer<tf_CType>)
@@ -237,7 +232,6 @@ namespace
 				Value += 2;
 				DMibTest(DMibExpr(Atomic -= 1) == DMibExpr(Value));
 				Value -= 2;
-
 			}
 		}
 
