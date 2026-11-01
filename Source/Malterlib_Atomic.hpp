@@ -92,7 +92,7 @@ namespace NMib::NAtomic
 	}
 
 	template <typename t_CType>
-	bool TCAtomicIndeterminate<t_CType>::f_CompareExchangeWeak(t_CType &_Expected, t_CType _Desired, CMemoryOrder _SuccessOrder, CMemoryOrder _FailureOrder ) volatile noexcept
+	bool TCAtomicIndeterminate<t_CType>::f_CompareExchangeWeak(t_CType &_Expected, t_CType _Desired, CMemoryOrder _SuccessOrder, CMemoryOrder _FailureOrder) volatile noexcept
 	{
 		return std::atomic_ref<t_CType>(const_cast<t_CType &>(m_Value)).compare_exchange_weak(_Expected, _Desired, _SuccessOrder, _FailureOrder);
 	}
@@ -116,7 +116,7 @@ namespace NMib::NAtomic
 	}
 
 	template <typename t_CType>
-	bool TCAtomicIndeterminate<t_CType>::f_CompareExchangeStrong(t_CType &_Expected, t_CType _Desired, CMemoryOrder _SuccessOrder, CMemoryOrder _FailureOrder ) volatile noexcept
+	bool TCAtomicIndeterminate<t_CType>::f_CompareExchangeStrong(t_CType &_Expected, t_CType _Desired, CMemoryOrder _SuccessOrder, CMemoryOrder _FailureOrder) volatile noexcept
 	{
 		return std::atomic_ref<t_CType>(const_cast<t_CType &>(m_Value)).compare_exchange_strong(_Expected, _Desired, _SuccessOrder, _FailureOrder);
 	}
@@ -206,13 +206,13 @@ namespace NMib::NAtomic
 	template <typename t_CType>
 	t_CType TCAtomicIndeterminate<t_CType>::operator ++ () noexcept
 	{
-		return std::atomic_ref<t_CType>(m_Value).fetch_add(1)+1;
+		return std::atomic_ref<t_CType>(m_Value).fetch_add(1) + 1;
 	}
 
 	template <typename t_CType>
 	t_CType TCAtomicIndeterminate<t_CType>::operator ++ () volatile noexcept
 	{
-		return std::atomic_ref<t_CType>(const_cast<t_CType &>(m_Value)).fetch_add(1)+1;
+		return std::atomic_ref<t_CType>(const_cast<t_CType &>(m_Value)).fetch_add(1) + 1;
 	}
 
 	template <typename t_CType>
@@ -230,13 +230,13 @@ namespace NMib::NAtomic
 	template <typename t_CType>
 	t_CType TCAtomicIndeterminate<t_CType>::operator -- () noexcept
 	{
-		return std::atomic_ref<t_CType>(m_Value).fetch_sub(1)-1;
+		return std::atomic_ref<t_CType>(m_Value).fetch_sub(1) - 1;
 	}
 
 	template <typename t_CType>
 	t_CType TCAtomicIndeterminate<t_CType>::operator -- () volatile noexcept
 	{
-		return std::atomic_ref<t_CType>(const_cast<t_CType &>(m_Value)).fetch_sub(1)-1;
+		return std::atomic_ref<t_CType>(const_cast<t_CType &>(m_Value)).fetch_sub(1) - 1;
 	}
 
 	template <typename t_CType>
@@ -360,10 +360,12 @@ namespace NMib::NAtomic
 	{
 		return std::atomic_flag::test_and_set(_Order);
 	}
+
 	inline_always void CAtomicFlag::f_Clear(CMemoryOrder _Order) volatile noexcept
 	{
 		return std::atomic_flag::clear(_Order);
 	}
+
 	inline_always void CAtomicFlag::f_Clear(CMemoryOrder _Order) noexcept
 	{
 		return std::atomic_flag::clear(_Order);
