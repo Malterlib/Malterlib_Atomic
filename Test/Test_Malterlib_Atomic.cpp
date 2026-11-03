@@ -42,8 +42,8 @@ namespace
 	constinit TCAtomic<ch32> g_TestInit_ch32{11};
 	static_assert(sizeof(g_TestInit_ch32) == 4);
 
-	constinit TCAtomic<umint> g_TestInit_mint{12};
-	static_assert(sizeof(g_TestInit_mint) == sizeof(umint));
+	constinit TCAtomic<umint> g_TestInit_umint{12};
+	static_assert(sizeof(g_TestInit_umint) == sizeof(umint));
 
 	constinit TCAtomic<smint> g_TestInit_smint{13};
 	static_assert(sizeof(g_TestInit_smint) == sizeof(smint));
@@ -74,7 +74,7 @@ namespace
 		(void)g_TestInit_ch16;
 		(void)g_TestInit_ch32;
 
-		(void)g_TestInit_mint;
+		(void)g_TestInit_umint;
 		(void)g_TestInit_smint;
 		(void)g_TestInit_aint;
 		(void)g_TestInit_uaint;
@@ -112,11 +112,11 @@ namespace
 				NMib::NContainer::TCVector<NMib::NStorage::TCUniquePointer<NMib::NThread::CThreadObject>> Threads;
 
 				NMib::NContainer::TCSet<tf_CType> ToCheck;
-				for (int i = 0; i < 32; ++i)
+				for (int iRandom = 0; iRandom < 32; ++iRandom)
 					ToCheck[(tf_CType)(umint)NMib::NMisc::fg_GetRandom()];
 
 				NMib::NContainer::TCSet<tf_CType> ToCheck2;
-				for (int i = 0; i < 32; ++i)
+				for (int iRandom = 0; iRandom < 32; ++iRandom)
 					ToCheck2[(tf_CType)(umint)NMib::NMisc::fg_GetRandom()];
 
 				NMib::NThread::CMutual Lock;
@@ -140,7 +140,7 @@ namespace
 								{
 									NMib::NAtomic::fg_MemoryFence();
 									auto ThisLocal = This;
-									for (int i = 0; i < gc_Iterations; ++i)
+									for (int iIteration = 0; iIteration < gc_Iterations; ++iIteration)
 										ThisLocal = Atomic.f_Exchange(ThisLocal);
 									ThisLocal = fg_KillDependency(ThisLocal);
 									{
@@ -288,11 +288,11 @@ namespace
 			NMib::NContainer::TCVector<NMib::NStorage::TCUniquePointer<NMib::NThread::CThreadObject>> Threads;
 
 			NMib::NContainer::TCSet<int8> ToCheck;
-			for (int i = 0; i < 32; ++i)
+			for (int iRandom = 0; iRandom < 32; ++iRandom)
 				ToCheck[(int8)NMib::NMisc::fg_GetRandom()];
 
 			NMib::NContainer::TCSet<int8> ToCheck2;
-			for (int i = 0; i < 32; ++i)
+			for (int iRandom = 0; iRandom < 32; ++iRandom)
 				ToCheck2[(int8)NMib::NMisc::fg_GetRandom()];
 
 			NMib::NThread::CMutual Lock;
@@ -316,7 +316,7 @@ namespace
 							{
 								NMib::NAtomic::fg_MemoryFence();
 								auto ThisLocal = This;
-								for (int i = 0; i < gc_Iterations; ++i)
+								for (int iIteration = 0; iIteration < gc_Iterations; ++iIteration)
 								{
 									while (Flag.f_TestAndSet())
 										NMib::NSys::fg_Thread_Yield();
