@@ -6,8 +6,8 @@
 namespace
 {
 	using namespace NMib::NAtomic;
-	constinit TCAtomic<bool> g_TestInit_bool{false};
-	static_assert(sizeof(g_TestInit_bool) == 1);
+	constinit TCAtomic<bool> g_bTestInit_bool{false};
+	static_assert(sizeof(g_bTestInit_bool) == 1);
 
 	constinit TCAtomic<int8> g_TestInit_int8{1};
 	static_assert(sizeof(g_TestInit_int8) == 1);
@@ -58,7 +58,7 @@ namespace
 
 	void fg_ReferenceVars()
 	{
-		(void)g_TestInit_bool;
+		(void)g_bTestInit_bool;
 
 		(void)g_TestInit_int8;
 		(void)g_TestInit_int16;
