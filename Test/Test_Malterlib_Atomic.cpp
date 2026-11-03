@@ -88,9 +88,8 @@ namespace
 	static constexpr umint gc_Iterations = 64 * 1024;
 #endif
 
-	class CAtomic_Tests : public NMib::NTest::CTest
+	struct CAtomic_Tests : public NMib::NTest::CTest
 	{
-	public:
 		template <typename tf_CType>
 		void f_TestShared(NMib::NStr::CStr const &_Name)
 		{

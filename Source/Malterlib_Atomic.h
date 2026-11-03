@@ -143,11 +143,8 @@ namespace NMib::NAtomic
 		constexpr TCAtomic &operator = (TCAtomicIndeterminate<t_CType> const &_Source) noexcept = delete;
 	};
 
-	class CAtomicFlag : protected std::atomic_flag
+	struct CAtomicFlag : protected std::atomic_flag
 	{
-		using CSuper = std::atomic_flag;
-
-	public:
 		constexpr inline_always CAtomicFlag() noexcept;
 
 		inline_always bool f_TestAndSet(CMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) volatile noexcept;
@@ -155,6 +152,9 @@ namespace NMib::NAtomic
 
 		inline_always void f_Clear(CMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) volatile noexcept;
 		inline_always void f_Clear(CMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) noexcept;
+
+	private:
+		using CSuper = std::atomic_flag;
 	};
 
 	template <typename tf_CType>
