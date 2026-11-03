@@ -14,7 +14,7 @@ namespace NMib::NAtomic
 	/**
 
 	 */
-	using CMemoryOrder = std::memory_order;
+	using EMemoryOrder = std::memory_order;
 
 	static constexpr auto gc_MemoryOrder_Relaxed = std::memory_order_relaxed; ///< Relaxed ordering
 	static constexpr auto gc_MemoryOrder_Consume = std::memory_order_consume; ///< Consume ordering
@@ -34,49 +34,49 @@ namespace NMib::NAtomic
 		bool f_IsLockFree() const noexcept;
 		bool f_IsLockFree() const volatile noexcept;
 
-		constexpr void f_Store(t_CType _Value, CMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) noexcept;
-		constexpr void f_Store(t_CType _Value, CMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) volatile noexcept;
+		constexpr void f_Store(t_CType _Value, EMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) noexcept;
+		constexpr void f_Store(t_CType _Value, EMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) volatile noexcept;
 
-		constexpr t_CType f_Load(CMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) const noexcept;
-		constexpr t_CType f_Load(CMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) const volatile noexcept;
+		constexpr t_CType f_Load(EMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) const noexcept;
+		constexpr t_CType f_Load(EMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) const volatile noexcept;
 
-		t_CType f_Exchange(t_CType _Value, CMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) noexcept;
-		t_CType f_Exchange(t_CType _Value, CMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) volatile noexcept;
+		t_CType f_Exchange(t_CType _Value, EMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) noexcept;
+		t_CType f_Exchange(t_CType _Value, EMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) volatile noexcept;
 
-		bool f_CompareExchangeWeak(t_CType &_Expected, t_CType _Desired, CMemoryOrder _SuccessOrder, CMemoryOrder _FailureOrder) noexcept;
-		bool f_CompareExchangeWeak(t_CType &_Expected, t_CType _Desired, CMemoryOrder _SuccessOrder, CMemoryOrder _FailureOrder) volatile noexcept;
-		bool f_CompareExchangeWeak(t_CType &_Expected, t_CType _Desired, CMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) noexcept;
-		bool f_CompareExchangeWeak(t_CType &_Expected, t_CType _Desired, CMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) volatile noexcept;
+		bool f_CompareExchangeWeak(t_CType &_Expected, t_CType _Desired, EMemoryOrder _SuccessOrder, EMemoryOrder _FailureOrder) noexcept;
+		bool f_CompareExchangeWeak(t_CType &_Expected, t_CType _Desired, EMemoryOrder _SuccessOrder, EMemoryOrder _FailureOrder) volatile noexcept;
+		bool f_CompareExchangeWeak(t_CType &_Expected, t_CType _Desired, EMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) noexcept;
+		bool f_CompareExchangeWeak(t_CType &_Expected, t_CType _Desired, EMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) volatile noexcept;
 
-		bool f_CompareExchangeStrong(t_CType &_Expected, t_CType _Desired, CMemoryOrder _SuccessOrder, CMemoryOrder _FailureOrder) noexcept;
-		bool f_CompareExchangeStrong(t_CType &_Expected, t_CType _Desired, CMemoryOrder _SuccessOrder, CMemoryOrder _FailureOrder) volatile noexcept;
-		bool f_CompareExchangeStrong(t_CType &_Expected, t_CType _Desired, CMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) noexcept;
-		bool f_CompareExchangeStrong(t_CType &_Expected, t_CType _Desired, CMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) volatile noexcept;
-
-		template <typename tf_CType>
-		t_CType f_FetchAdd(tf_CType _Value, CMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) noexcept;
-		template <typename tf_CType>
-		t_CType f_FetchAdd(tf_CType _Value, CMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) volatile noexcept;
+		bool f_CompareExchangeStrong(t_CType &_Expected, t_CType _Desired, EMemoryOrder _SuccessOrder, EMemoryOrder _FailureOrder) noexcept;
+		bool f_CompareExchangeStrong(t_CType &_Expected, t_CType _Desired, EMemoryOrder _SuccessOrder, EMemoryOrder _FailureOrder) volatile noexcept;
+		bool f_CompareExchangeStrong(t_CType &_Expected, t_CType _Desired, EMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) noexcept;
+		bool f_CompareExchangeStrong(t_CType &_Expected, t_CType _Desired, EMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) volatile noexcept;
 
 		template <typename tf_CType>
-		t_CType f_FetchSub(tf_CType _Value, CMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) noexcept;
+		t_CType f_FetchAdd(tf_CType _Value, EMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) noexcept;
 		template <typename tf_CType>
-		t_CType f_FetchSub(tf_CType _Value, CMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) volatile noexcept;
+		t_CType f_FetchAdd(tf_CType _Value, EMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) volatile noexcept;
 
 		template <typename tf_CType>
-		t_CType f_FetchAnd(tf_CType _Value, CMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) noexcept;
+		t_CType f_FetchSub(tf_CType _Value, EMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) noexcept;
 		template <typename tf_CType>
-		t_CType f_FetchAnd(tf_CType _Value, CMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) volatile noexcept;
+		t_CType f_FetchSub(tf_CType _Value, EMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) volatile noexcept;
 
 		template <typename tf_CType>
-		t_CType f_FetchOr(tf_CType _Value, CMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) noexcept;
+		t_CType f_FetchAnd(tf_CType _Value, EMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) noexcept;
 		template <typename tf_CType>
-		t_CType f_FetchOr(tf_CType _Value, CMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) volatile noexcept;
+		t_CType f_FetchAnd(tf_CType _Value, EMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) volatile noexcept;
 
 		template <typename tf_CType>
-		t_CType f_FetchXor(tf_CType _Value, CMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) noexcept;
+		t_CType f_FetchOr(tf_CType _Value, EMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) noexcept;
 		template <typename tf_CType>
-		t_CType f_FetchXor(tf_CType _Value, CMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) volatile noexcept;
+		t_CType f_FetchOr(tf_CType _Value, EMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) volatile noexcept;
+
+		template <typename tf_CType>
+		t_CType f_FetchXor(tf_CType _Value, EMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) noexcept;
+		template <typename tf_CType>
+		t_CType f_FetchXor(tf_CType _Value, EMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) volatile noexcept;
 
 		t_CType &f_NonAtomic();
 		t_CType const &f_NonAtomic() const;
@@ -147,11 +147,11 @@ namespace NMib::NAtomic
 	{
 		constexpr inline_always CAtomicFlag() noexcept;
 
-		inline_always bool f_TestAndSet(CMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) volatile noexcept;
-		inline_always bool f_TestAndSet(CMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) noexcept;
+		inline_always bool f_TestAndSet(EMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) volatile noexcept;
+		inline_always bool f_TestAndSet(EMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) noexcept;
 
-		inline_always void f_Clear(CMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) volatile noexcept;
-		inline_always void f_Clear(CMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) noexcept;
+		inline_always void f_Clear(EMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) volatile noexcept;
+		inline_always void f_Clear(EMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) noexcept;
 
 	private:
 		using CSuper = std::atomic_flag;
@@ -160,8 +160,8 @@ namespace NMib::NAtomic
 	template <typename tf_CType>
 	inline_always tf_CType fg_KillDependency(tf_CType _Value) noexcept;
 
-	inline_always void fg_MemoryFence(CMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) noexcept;
-	inline_always void fg_CompilerFence(CMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) noexcept;
+	inline_always void fg_MemoryFence(EMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) noexcept;
+	inline_always void fg_CompilerFence(EMemoryOrder _Order = gc_MemoryOrder_SequentiallyConsistent) noexcept;
 }
 
 #ifndef DMibPNoShortCuts
