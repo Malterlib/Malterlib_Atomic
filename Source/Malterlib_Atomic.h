@@ -27,9 +27,10 @@ namespace NMib::NAtomic
 	struct TCAtomicIndeterminate
 	{
 		constexpr TCAtomicIndeterminate(TCAtomicIndeterminate const &_Source) noexcept = default;
-		constexpr TCAtomicIndeterminate &operator = (TCAtomicIndeterminate const &_Source) noexcept = default;
 		constexpr TCAtomicIndeterminate() noexcept = default;
 		constexpr TCAtomicIndeterminate(t_CType _Value) noexcept;
+
+		constexpr TCAtomicIndeterminate &operator = (TCAtomicIndeterminate const &_Source) noexcept = default;
 
 		bool f_IsLockFree() const noexcept;
 		bool f_IsLockFree() const volatile noexcept;
@@ -132,12 +133,13 @@ namespace NMib::NAtomic
 	struct TCAtomic : public TCAtomicIndeterminate<t_CType>
 	{
 		using TCAtomicIndeterminate<t_CType>::TCAtomicIndeterminate;
-		using TCAtomicIndeterminate<t_CType>::operator =;
 
 		constexpr TCAtomic() noexcept(NTraits::cIsNothrowDefaultConstructible<t_CType>);
 
 		consteval TCAtomic(TCAtomic const &_Source) noexcept = default;
 		constexpr TCAtomic(TCAtomicIndeterminate<t_CType> const &_Source) noexcept = delete;
+
+		using TCAtomicIndeterminate<t_CType>::operator =;
 
 		consteval TCAtomic &operator = (TCAtomic const &_Source) noexcept = default;
 		constexpr TCAtomic &operator = (TCAtomicIndeterminate<t_CType> const &_Source) noexcept = delete;
